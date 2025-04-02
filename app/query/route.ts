@@ -1,26 +1,65 @@
-// import postgres from 'postgres';
+import postgres from "postgres";
 
-// const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
-// async function listInvoices() {
-// 	const data = await sql`
-//     SELECT invoices.amount, customers.name
-//     FROM invoices
-//     JOIN customers ON invoices.customer_id = customers.id
-//     WHERE invoices.amount = 666;
-//   `;
+async function getInnerJoin() {
+  const data = await sql`
+    SELECT c.id, c.name, i.amount
+    FROM customers c
+    INNER JOIN invoices i ON c.id = i.customer_id;
+  `;
+  return data;
+}
 
-// 	return data;
-// }
+async function getLeftJoin() {
+  const data = await sql`
+    SELECT c.id, c.name, i.amount
+    FROM customers c
+    LEFT JOIN invoices i ON c.id = i.customer_id;
+  `;
+  return data;
+}
 
-export async function GET() {
-  return Response.json({
-    message:
-      'Uncomment this file and remove this line. You can delete this file when you are finished.',
-  });
-  // try {
-  // 	return Response.json(await listInvoices());
-  // } catch (error) {
-  // 	return Response.json({ error }, { status: 500 });
-  // }
+async function getRightJoin() {
+  const data = await sql`
+    SELECT i.id, i.amount, c.name
+    FROM customers c
+    RIGHT JOIN invoices i ON c.id = i.customer_id;
+  `;
+  return data;
+}
+
+async function getFullJoin() {
+  const data = await sql`
+    SELECT c.name, i.amount
+    FROM customers c
+    FULL JOIN invoices i ON c.id = i.customer_id;
+  `;
+  return data;
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const joinType = searchParams.get("join");
+
+  try {
+    switch (joinType) {
+      case "inner":
+        return Response.json(await getInnerJoin());
+      case "left":
+        return Response.json(await getLeftJoin());
+      case "right":
+        return Response.json(await getRightJoin());
+      case "full":
+        return Response.json(await getFullJoin());
+      default:
+        return Response.json({
+          message:
+            "Specify join type in query parameter: ?join=inner|left|right|full",
+          example: "/query?join=inner",
+        });
+    }
+  } catch (error) {
+    return Response.json({ error }, { status: 500 });
+  }
 }
