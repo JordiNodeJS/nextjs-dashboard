@@ -1,4 +1,5 @@
 import "@/app/ui/global.css";
+import { font } from "./ui/fonts";
 
 export default function RootLayout({
   children,
@@ -7,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className={`${font} antialiased`}>{children}</body>
     </html>
   );
 }
