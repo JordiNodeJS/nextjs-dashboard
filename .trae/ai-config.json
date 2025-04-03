@@ -1,0 +1,9 @@
+{
+  "framework": "nextjs",
+  "rulesFile": "./.trae/TRAE_RULES.md",
+  "ignoredPatterns": ["*.test.ts", "**/__mocks__/*"],
+  "autoImport": {
+    "enabled": true,
+    "preferRelative": false
+  }
+}
