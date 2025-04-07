@@ -2,6 +2,7 @@
 
 import { ChangeEvent } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { useDebouncedCallback } from 'use-debounce';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
@@ -10,13 +11,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const router = useRouter()
   const pathname = usePathname()
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams)
+  const handleSearch = useDebouncedCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams);
     const term = e.target.value?.trim();
     term ? params.set('query', term) : params.delete('query');
-
     router.replace(`${pathname}?${params.toString()}`);
-  };
+  }, 1000); // 300ms de delay
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
