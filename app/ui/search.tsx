@@ -12,11 +12,8 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams)
-    if (e.target.value) {
-      params.set('query', e.target.value)
-    } else {
-      params.delete('query')
-    }
+    const value = e.target.value?.trim();
+    value ? params.set('query', value) : params.delete('query');
 
     router.replace(`${pathname}?${params.toString()}`);
   };
