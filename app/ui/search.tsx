@@ -13,10 +13,11 @@ export default function Search({ placeholder }: { placeholder: string }) {
 
   const handleSearch = useDebouncedCallback((e: ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
     const term = e.target.value?.trim();
     term ? params.set('query', term) : params.delete('query');
     router.replace(`${pathname}?${params.toString()}`);
-  }, 1000); // 300ms de delay
+  }, 300); // 300ms de delay
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
