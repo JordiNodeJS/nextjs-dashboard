@@ -2,6 +2,8 @@
 
 This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
 
+Para entender el comportamiento de `redirect()` en acciones de servidor, ver [redirect-behavior.md](./redirect-behavior.md).
+
 For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
 
 The line you're asking about is creating a new `URLSearchParams` object from the current search parameters:
