@@ -1,5 +1,20 @@
 import { ReactNode } from "react";
 import SideNav from "@/app/ui/dashboard/sidenav";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Dashboard",
+    default: "Dashboard",
+  },
+  description: "Panel principal de la aplicación.",
+  openGraph: {
+    title: "Dashboard",
+    description: "Panel principal de la aplicación.",
+    images: ["/opengraph-image.jpg"],
+  },
+  icons: { icon: "/favicon.ico" },
+};
 
 export const experimental_ppr = true;
 
