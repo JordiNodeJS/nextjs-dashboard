@@ -1,6 +1,24 @@
 import "@/app/ui/global.css";
 import { font } from "./ui/fonts";
 import ThemeToggle from "./ui/theme-toggle";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Next.js App Router",
+  description: "A simple Next.js app router example",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  themeColor: "#ffffff",
+  appleWebApp: {
+    title: "Next.js App Router",
+    statusBarStyle: "default",
+    capable: true,
+  },
+};
 
 export default function RootLayout({
   children,
