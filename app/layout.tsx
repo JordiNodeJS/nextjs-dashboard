@@ -4,7 +4,10 @@ import ThemeToggle from "./ui/theme-toggle";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Next.js App Router",
+  title: {
+    default: "Next.js App Router",
+    template: "%s | Next.js App Router",
+  },
   description: "A simple Next.js app router example",
   icons: {
     icon: "/favicon.ico",

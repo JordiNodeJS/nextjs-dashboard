@@ -1,11 +1,29 @@
-import { Suspense } from 'react';
-import Pagination from '@/app/ui/invoices/pagination';
-import { fetchInvoicesPages } from '@/app/lib/data';
-import Search from '@/app/ui/search';
-import Table from '@/app/ui/invoices/table';
-import { CreateInvoice } from '@/app/ui/invoices/buttons';
-import { lusitana } from '@/app/ui/fonts';
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
+import { Suspense } from "react";
+import Pagination from "@/app/ui/invoices/pagination";
+import { fetchInvoicesPages } from "@/app/lib/data";
+import Search from "@/app/ui/search";
+import Table from "@/app/ui/invoices/table";
+import { CreateInvoice } from "@/app/ui/invoices/buttons";
+import { lusitana } from "@/app/ui/fonts";
+import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Invoices",
+  description: "Manage your invoices",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  themeColor: "#ffffff",
+  appleWebApp: {
+    title: "Invoices",
+    statusBarStyle: "default",
+    capable: true,
+  },
+};
 
 export default async function Page({
   searchParams,
@@ -15,7 +33,7 @@ export default async function Page({
     page?: string;
   };
 }) {
-  const { query = '', page = '' } = await searchParams || {};
+  const { query = "", page = "" } = (await searchParams) || {};
   const currentPage = Number(page) || 1;
   const totalPages = await fetchInvoicesPages(query);
 
