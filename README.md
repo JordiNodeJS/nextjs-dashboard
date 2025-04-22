@@ -37,3 +37,7 @@ This implementation:
 5. Preserves the browser history (users can navigate back/forward)
 
 This pattern creates a seamless search experience where the URL updates instantly as the user types, making the search state shareable and bookmarkable while maintaining application performance.
+
+# user DEMO
+Email: user@nextmail.com
+Password: 123456

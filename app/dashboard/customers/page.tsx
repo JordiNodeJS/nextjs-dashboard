@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   icons: { icon: "/customers-favicon.ico" },
 };
 
-export default function Page() {
-  return <div>Customers Pages</div>;
+import { fetchCustomers } from "@/app/lib/data";
+import CustomersTable from "@/app/ui/customers/table";
+
+export default async function Page() {
+  const customers = await fetchCustomers();
+  
+  return (
+    <main>
+      <CustomersTable customers={customers} />
+    </main>
+  );
 }
