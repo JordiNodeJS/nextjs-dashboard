@@ -1,57 +1,62 @@
-# Instrucciones para GitHub Copilot y AI en este repositorio
+# Copilot / AI Quick Instructions — nextjs-dashboard
 
-## 1. Ubicación y contexto de reglas
+Purpose: Give AI coding agents immediate, actionable rules and repo-specific patterns. Read `.github/AI_RULES.md` first — it is the full policy.
 
-- Las reglas específicas para la IA están en `.trae/RULES.md` y `.trae/TRAE_RULES.md`.
-- Las reglas generales de codificación están en `CODING_RULES.md`.
+- **Key files:** `app/` (pages/components), `app/lib/` (data, actions, utils, definitions), `app/ui/` (reusable UI + skeletons), `proxy.ts` (auth proxy), `next.config.ts`, `tailwind.config.ts`, `CODING_RULES.md`.
 
-## 2. Componentes y Tipado
+- **Commands:** Use `pnpm`.
 
-- Usa siempre componentes funcionales de React con TypeScript.
-- Define interfaces para las props de los componentes.
-- Mantén el orden y la organización de props y destructuración consistente.
-- Nombra los componentes con PascalCase.
+  - Dev: `pnpm dev`
+  - Build: `pnpm build`
+  - Lint: `pnpm lint`
 
-## 3. Estilos
+- **Next.js 16 / React 19 patterns (CRITICAL):**
 
-- Utiliza Tailwind CSS como solución principal de estilos.
-- Ordena las clases: posicionamiento > layout > box model > tipografía.
+  - `params` and `searchParams` are Promises — always `await` them:
+    ```ts
+    const { query = "" } = (await searchParams) || {};
+    const { id } = await params;
+    ```
+  - Use `Suspense` for components that call `useSearchParams()` or rely on client-side transitions (see `app/(overview)/loading.tsx` and `app/ui/skeletons.tsx`).
+  - Export `viewport` separately from `metadata` in pages/layouts.
 
-## 4. Manejo de datos y errores
+- **Server Actions & Forms:**
 
-- Usa utilidades como `formatCurrency` para formateo monetario.
-- Implementa el patrón de manejo de errores con `console.error("Database Error:", error);` y nunca uses `console.log()` en producción.
-- Los tipos de datos deben estar definidos en `/app/lib/definitions.ts`.
+  - Server actions live in `app/lib/actions.ts` and use `"use server"`.
+  - Form `action` must not be an inline arrow function. Use `.bind()` or hidden inputs. Example:
+    ```tsx
+    const deleteWithId = deleteInvoice.bind(null, id);
+    <form action={deleteWithId}>...</form>
+    // or
+    <form action={deleteInvoice}><input type="hidden" name="id" value={id} /></form>
+    ```
 
-## 5. Next.js Best Practices
+- **Styling & UI conventions:**
 
-- Usa `async/await` para data fetching.
-- Implementa boundaries de error y estados de loading.
-- Usa `Suspense` para loading states.
-- Siempre maneja `searchParams` con tipado TypeScript y destructuración con valores por defecto:
-  ```typescript
-  const { query = "", page = "" } = (await searchParams) || {};
-  ```
-- Sigue la organización de componentes y carpetas como en la página de invoices.
+  - Tailwind CSS is used; class order: positioning → layout → box → typography → effects.
+  - Reusable UI components are under `app/ui/` (e.g., `sidenav.tsx`, `skeletons.tsx`, `search.tsx`).
 
-## 6. Prohibiciones
+- **Data, types and helpers:**
 
-- No uses arrow functions como actions de formulario en Server Actions (usa `.bind()` o el patrón de input hidden).
-- No uses `console.log()` en producción.
+  - Types/interfaces: `app/lib/definitions.ts`.
+  - Data fetching helpers: `app/lib/data.ts`.
+  - Utilities (formatCurrency, etc.): `app/lib/utils.ts`.
 
-## 7. Accesibilidad
+- **Prohibitions & hard rules:**
 
-- Usa labels ocultos (`sr-only`) para screen readers:
-  ```tsx
-  <label htmlFor="search" className="sr-only">
-    Search
-  </label>
-  ```
+  - Do not add `console.log()` in production code — use `console.error("Database Error:", err)` for errors.
+  - Do not use `any`. Prefer precise `interface` or `unknown` then narrow.
+  - Do not add `middleware.ts`; use `proxy.ts` (Next.js 16 pattern in this repo).
 
-## 8. Organización
+- **Imports order & style:** follow `AI_RULES.md`: React/Next → external libs → local components (`@/`) → utils/types.
 
-- Mantén la estructura de carpetas y componentes siguiendo el ejemplo de la página de invoices.
+- **Where to look for examples:**
+  - Invoices: `app/dashboard/invoices/*` and `app/ui/invoices/*` show patterns for server actions, forms, and routing.
+  - Authentication: `proxy.ts` and `auth.config.ts` show auth integration.
+  - Routes and seeding: `app/seed/route.ts`, `app/query/route.ts` illustrate API route patterns.
+
+If behavior is unclear, open the files above and mirror the existing patterns. Ask if you want the same content translated or expanded.
 
 ---
 
-Estas instrucciones aseguran que la IA genere código alineado con las reglas y convenciones del repositorio.
+Estas instrucciones son un resumen conciso; para reglas completas y ejemplos extensos, lee `./.github/AI_RULES.md`.
