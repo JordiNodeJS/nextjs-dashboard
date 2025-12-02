@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -13,14 +17,17 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    // (removed) Previously used to silence TS 6+ deprecation warnings. Keeping empty to stay compatible with TypeScript 5.
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "baseUrl": ".",
+    // `baseUrl` is deprecated in TS 6 and later; remove it and rely on `paths` which resolve relative to this file
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
@@ -31,5 +38,7 @@
     "app/lib/placeholder-data.ts",
     "scripts/seed.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -142,9 +142,16 @@ export async function authenticate(
   prevState: string | undefined,
   formData: FormData
 ) {
+  const email = formData.get("email");
+  console.log("authenticate(): called for email=", email);
   try {
     await signIn("credentials", formData);
   } catch (error) {
+    console.error("authenticate() server action error:", error);
+    // If signIn throws a Response (e.g. a redirect Response), rethrow it so the client can follow
+    if (typeof Response !== "undefined" && error instanceof Response) {
+      throw error;
+    }
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":

@@ -1,3 +1,7 @@
+# Tutorial de Next.js App Router - Plantilla Inicial
+
+https://nextjs.org/learn/dashboard-app
+
 ## Next.js App Router Course - Starter
 
 This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
@@ -9,7 +13,7 @@ For more information, see the [course curriculum](https://nextjs.org/learn) on t
 The line you're asking about is creating a new `URLSearchParams` object from the current search parameters:
 
 ```typescript
-const params = new URLSearchParams(searchParams)
+const params = new URLSearchParams(searchParams);
 ```
 
 Here's what it does:
@@ -26,10 +30,11 @@ This pattern is common when you want to update URL search parameters without los
 The modified `params` object is then used to update the URL with the router's replace method:
 
 ```typescript
-router.replace(`${pathname}?${params.toString()}`)
+router.replace(`${pathname}?${params.toString()}`);
 ```
 
 This implementation:
+
 1. Uses `useRouter()` from Next.js to get access to the navigation methods
 2. Uses `usePathname()` to get the current path without query parameters
 3. Combines the current path with the updated search parameters
@@ -39,5 +44,6 @@ This implementation:
 This pattern creates a seamless search experience where the URL updates instantly as the user types, making the search state shareable and bookmarkable while maintaining application performance.
 
 # user DEMO
+
 Email: user@nextmail.com
 Password: 123456

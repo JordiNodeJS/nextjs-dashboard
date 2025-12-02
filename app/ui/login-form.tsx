@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { authenticate } from "@/app/lib/actions";
 import { useSearchParams } from "next/navigation";
 import { lusitana } from "@/app/ui/fonts";
+import { users } from "@/app/lib/placeholder-data";
 import {
   AtSymbolIcon,
   KeyIcon,
@@ -41,6 +42,11 @@ export default function LoginForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
+                defaultValue={
+                  process.env.NODE_ENV === "development"
+                    ? users?.[0]?.email
+                    : undefined
+                }
                 required
               />
               <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900 dark:text-gray-400 dark:peer-focus:text-gray-300" />
@@ -60,6 +66,11 @@ export default function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter password"
+                defaultValue={
+                  process.env.NODE_ENV === "development"
+                    ? users?.[0]?.password
+                    : undefined
+                }
                 required
                 minLength={6}
               />
