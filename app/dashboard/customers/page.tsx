@@ -1,4 +1,9 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+import { Suspense } from "react";
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   title: "Customers",
@@ -16,10 +21,14 @@ import CustomersTable from "@/app/ui/customers/table";
 
 export default async function Page() {
   const customers = await fetchCustomers();
-  
+
   return (
     <main>
-      <CustomersTable customers={customers} />
+      <Suspense
+        fallback={<div className="animate-pulse">Loading customers...</div>}
+      >
+        <CustomersTable customers={customers} />
+      </Suspense>
     </main>
   );
 }

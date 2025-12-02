@@ -1,49 +1,64 @@
-# Tutorial de Next.js App Router - Plantilla Inicial
+# Next.js Dashboard - Tutorial Oficial
 
-https://nextjs.org/learn/dashboard-app
+Este proyecto es parte del **[Tutorial oficial de Next.js App Router](https://nextjs.org/learn/dashboard-app)** de Vercel.
 
-## Next.js App Router Course - Starter
+## 📚 Recursos del Tutorial
 
-This is the starter template for the Next.js App Router Course. It contains the starting code for the dashboard application.
+- **Tutorial completo**: [Next.js Learn - Dashboard App](https://nextjs.org/learn/dashboard-app)
+- **Capítulo inicial**: [Getting Started](https://nextjs.org/learn/dashboard-app/getting-started)
+- **Repositorio starter del curso**: [vercel/next-learn/dashboard/starter-example](https://github.com/vercel/next-learn/tree/main/dashboard/starter-example)
+- **Documentación de Next.js**: [nextjs.org/docs](https://nextjs.org/docs)
+
+## 🎯 Comando para crear el proyecto
+
+```bash
+npx create-next-app@latest nextjs-dashboard --example "https://github.com/vercel/next-learn/tree/main/dashboard/starter-example" --use-pnpm
+```
+
+## 🚀 Descripción
+
+Esta es una aplicación de dashboard construida siguiendo el curso oficial de Next.js. El proyecto demuestra las características principales del App Router de Next.js 14+:
+
+- **App Router** - Sistema de rutas basado en el sistema de archivos
+- **Server Components** - Componentes renderizados en el servidor por defecto
+- **Server Actions** - Mutaciones de datos del lado del servidor
+- **Streaming** - Carga progresiva de UI con Suspense
+- **Autenticación** - Implementación con NextAuth.js
+- **Base de datos** - Integración con PostgreSQL
+
+## 🛠️ Tecnologías
+
+- [Next.js 14+](https://nextjs.org/)
+- [React 18+](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [NextAuth.js](https://next-auth.js.org/)
+
+## 📖 Notas del Proyecto
 
 Para entender el comportamiento de `redirect()` en acciones de servidor, ver [redirect-behavior.md](./redirect-behavior.md).
 
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
+### Patrón de URLSearchParams
 
-The line you're asking about is creating a new `URLSearchParams` object from the current search parameters:
+El proyecto utiliza el siguiente patrón para manejar parámetros de búsqueda:
 
 ```typescript
 const params = new URLSearchParams(searchParams);
 ```
 
-Here's what it does:
+Este patrón:
 
-1. `useSearchParams()` is a Next.js hook that returns the current URL's query parameters (the part after `?` in the URL)
-2. `new URLSearchParams(searchParams)` creates a mutable copy of these parameters that you can modify
-3. This is necessary because:
-   - The original `searchParams` from the hook is read-only
-   - We need to modify the parameters (set/delete) based on user input
-   - We'll use this modified version to update the URL later
+1. Crea una copia mutable de los parámetros de búsqueda actuales
+2. Permite modificar parámetros sin perder los existentes
+3. Se combina con `router.replace()` para actualizar la URL sin recargar la página
 
-This pattern is common when you want to update URL search parameters without losing existing ones. The next lines in your code then modify these params based on the search input value (either setting a new 'search' parameter or removing it if empty).
+## 👤 Usuario Demo
 
-The modified `params` object is then used to update the URL with the router's replace method:
+- **Email**: user@nextmail.com
+- **Password**: 123456
 
-```typescript
-router.replace(`${pathname}?${params.toString()}`);
-```
+## 🔗 Enlaces Útiles
 
-This implementation:
-
-1. Uses `useRouter()` from Next.js to get access to the navigation methods
-2. Uses `usePathname()` to get the current path without query parameters
-3. Combines the current path with the updated search parameters
-4. Updates the URL without causing a full page reload (client-side navigation)
-5. Preserves the browser history (users can navigate back/forward)
-
-This pattern creates a seamless search experience where the URL updates instantly as the user types, making the search state shareable and bookmarkable while maintaining application performance.
-
-# user DEMO
-
-Email: user@nextmail.com
-Password: 123456
+- [Curso Next.js Learn](https://nextjs.org/learn)
+- [Documentación App Router](https://nextjs.org/docs/app)
+- [Documentación Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)

@@ -3,7 +3,13 @@ import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
 import { fetchInvoiceById, fetchCustomers } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Edit Invoice",
@@ -14,7 +20,6 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  themeColor: "#ffffff",
   appleWebApp: {
     title: "Edit Invoice",
     statusBarStyle: "default",
@@ -23,7 +28,6 @@ export const metadata: Metadata = {
   keywords: ["invoices", "edit", "billing"],
   authors: [{ name: "Federico" }],
   robots: "index, follow",
-  viewport: "width=device-width, initial-scale=1",
 };
 
 export default async function Page({

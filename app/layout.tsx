@@ -1,7 +1,11 @@
 import "@/app/ui/global.css";
 import { font } from "./ui/fonts";
 import ThemeToggle from "./ui/theme-toggle";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -15,7 +19,6 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  themeColor: "#ffffff",
   appleWebApp: {
     title: "Next.js App Router",
     statusBarStyle: "default",
